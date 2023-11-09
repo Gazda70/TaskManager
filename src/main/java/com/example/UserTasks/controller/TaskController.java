@@ -31,6 +31,8 @@ public class TaskController {
             return taskService.getTasksInGivenStatus(taskStatus);
         } catch(StatusNotValidException statusNotValidException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
+        } catch (DateNotValidException dateNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task date");
         }
     }
 
@@ -42,8 +44,14 @@ public class TaskController {
     public void createTask(@RequestBody TaskData task) {
         try {
             taskService.createTask(task);
-        } catch (StatusNotValidException | ParseException | DateNotValidException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task data");
+        } catch (StatusNotValidException statusNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
+        } catch (DateNotValidException | ParseException dateNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task date");
+        } catch (IncompleteInputDataException incompleteInputDataException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incomplete task data");
+        } catch (ObjectAlreadyExistsException objectAlreadyExistsException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task already exists");
         }
     }
 
@@ -55,8 +63,14 @@ public class TaskController {
     public void editTask(@RequestBody TaskData task) {
         try {
             taskService.editTask(task);
-        } catch (StatusNotValidException | ParseException | DateNotValidException exception) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task data");
+        } catch (StatusNotValidException statusNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
+        } catch (DateNotValidException | ParseException dateNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task date");
+        } catch (IncompleteInputDataException incompleteInputDataException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incomplete task data");
+        } catch (ObjectDoesNotExistException objectDoesNotExistException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Task does not exist");
         }
     }
 

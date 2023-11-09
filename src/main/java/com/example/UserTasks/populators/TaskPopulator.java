@@ -19,11 +19,18 @@ public class TaskPopulator {
     @Autowired
     private PopulationUtils populationUtils;
 
-    public TaskModel populateTask(TaskModel taskModel, TaskData taskData) throws StatusNotValidException, DateNotValidException, ParseException {
-        taskModel.setTitle(taskData.getTitle());
-        taskModel.setStatus(Status.parseStatus(taskData.getStatus()));
-        taskModel.setDescription(taskData.getDescription());
-        taskModel.setDueDate(populationUtils.parseDate(taskData.getDueDate()));
+    @Autowired
+    private Validator validator;
+
+    public TaskModel populateTask(TaskModel taskModel, TaskData taskData) throws StatusNotValidException, DateNotValidException, IncompleteInputDataException {
+        if(validator.isTaskNotEmpty(taskData)) {
+            taskModel.setTitle(taskData.getTitle());
+            taskModel.setStatus(Status.parseStatus(taskData.getStatus()));
+            taskModel.setDescription(taskData.getDescription());
+            taskModel.setDueDate(populationUtils.parseDate(taskData.getDueDate()));
+        } else {
+            throw new IncompleteInputDataException();
+        }
         return taskModel;
     }
 }

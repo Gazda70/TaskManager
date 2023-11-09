@@ -29,8 +29,12 @@ public class UserServiceImpl {
     @Autowired
     private TaskDAO taskDAO;
 
-    public void createUser(final UserModel user) {
-        userDAO.save(user);
+    public void createUser(final UserData userData) throws IncompleteInputDataException, ObjectAlreadyExistsException {
+        UserModel userModel = new UserModel();
+        if(this.userDAO.getUserByName(userData.getName()) != null) {
+            throw new ObjectAlreadyExistsException();
+        }
+        userDAO.save(userPopulator.populateUser(userModel, userData));
     }
 
     public void deleteUserByName(final String userName) {

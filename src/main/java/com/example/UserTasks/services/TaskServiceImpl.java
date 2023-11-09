@@ -37,13 +37,19 @@ public class TaskServiceImpl {
     @Autowired
     private TaskReversePopulator taskReversePopulator;
 
-    public void createTask(TaskData task) throws StatusNotValidException, ParseException, DateNotValidException {
+    public void createTask(TaskData task) throws StatusNotValidException, ParseException, DateNotValidException, IncompleteInputDataException, ObjectAlreadyExistsException {
+        if(this.taskDAO.getTaskByTitle(task.getTitle()) != null) {
+            throw new ObjectAlreadyExistsException();
+        }
         TaskModel newTask = new TaskModel();
         this.taskDAO.save(taskPopulator.populateTask(newTask, task));
     }
 
-    public void editTask(TaskData task) throws StatusNotValidException, ParseException, DateNotValidException {
+    public void editTask(TaskData task) throws StatusNotValidException, ParseException, DateNotValidException, IncompleteInputDataException, ObjectDoesNotExistException {
         TaskModel existingTask = this.taskDAO.getTaskByTitle(task.getTitle());
+        if (existingTask == null) {
+            throw new ObjectDoesNotExistException();
+        }
         this.taskDAO.save(taskPopulator.populateTask(existingTask, task));
     }
 

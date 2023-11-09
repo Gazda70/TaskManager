@@ -20,8 +20,14 @@ public class UserController {
      * @param user userBody
      */
     @PostMapping("/create")
-    public void createUser(UserModel user) {
-        userService.createUser(user);
+    public void createUser(@RequestBody UserData user) {
+        try {
+            userService.createUser(user);
+        } catch(IncompleteInputDataException incompleteInputDataException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incomplete user data");
+        } catch(ObjectAlreadyExistsException objectAlreadyExistsException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
+        }
     }
 
     @GetMapping("/delete")

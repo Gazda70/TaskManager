@@ -15,15 +15,19 @@ public class PopulationUtils {
 
     private static final String DATE_FORMAT = "dd mm yyyy";
 
-    Date parseDate(final String dateString) throws DateNotValidException, ParseException {
+    Date parseDate(final String dateString) throws DateNotValidException {
         if(dateString.isBlank()) {
             throw new DateNotValidException();
         }
-        return new SimpleDateFormat(DATE_FORMAT).parse(dateString);
+        try {
+            return new SimpleDateFormat(DATE_FORMAT).parse(dateString);
+        } catch(ParseException parseException) {
+            throw new DateNotValidException();
+        }
     }
 
     String dateToString(final Date date) throws DateNotValidException {
-        if(date != null) {
+        if(date == null) {
             throw new DateNotValidException();
         }
         return new SimpleDateFormat(DATE_FORMAT).format(date);

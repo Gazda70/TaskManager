@@ -7,6 +7,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class for population related functionalities
+ */
 @Component
 public class PopulationUtils {
 
@@ -17,5 +20,12 @@ public class PopulationUtils {
             throw new DateNotValidException();
         }
         return new SimpleDateFormat(DATE_FORMAT).parse(dateString);
+    }
+
+    String dateToString(final Date date) throws DateNotValidException {
+        if(date != null) {
+            throw new DateNotValidException();
+        }
+        return new SimpleDateFormat(DATE_FORMAT).format(date);
     }
 }

@@ -1,10 +1,7 @@
 package com.example.UserTasks.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,7 +9,8 @@ import java.util.List;
  * Class for modelling user information
  */
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -25,9 +23,4 @@ public class UserModel {
     private String email;
     @ManyToMany
     private List<TaskModel> assignedTasks;
-    public UserModel(String Name, String Surname, String Email) {
-        this.name = Name;
-        this.surname = Surname;
-        this.email = Email;
-    }
 }

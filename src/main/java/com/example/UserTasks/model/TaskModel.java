@@ -23,18 +23,11 @@ public class TaskModel {
     private String description;
     private Status status;
     private Date dueDate;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "task_to_user",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "task_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
     )
     private List<UserModel> assignedUsers;
-    TaskModel(String title, String description, Status status, Date dueDate, List<UserModel> assignedUsers) {
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.dueDate = dueDate;
-        this.assignedUsers = assignedUsers;
-    }
 }

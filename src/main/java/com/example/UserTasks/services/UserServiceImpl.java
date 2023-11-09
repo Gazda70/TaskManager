@@ -12,12 +12,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+
+/**
+ * Service for task-related operations
+ */
 @Component
 @Transactional
 public class UserServiceImpl {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private UserPopulator userPopulator;
 
     @Autowired
     private TaskDAO taskDAO;

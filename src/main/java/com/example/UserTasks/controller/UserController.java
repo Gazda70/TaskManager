@@ -15,6 +15,10 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+    /**
+     * Create user
+     * @param user userBody
+     */
     @PostMapping("/create")
     public void createUser(UserModel user) {
         userService.createUser(user);
@@ -25,6 +29,10 @@ public class UserController {
         userService.deleteUserByName(name);
     }
 
+    /**
+     * Get all users that have at least one task in given status
+     * @param taskStatus task status
+     */
     @GetMapping("/getUsersWithTasksInStatus")
     public void getUsersWithTasksInStatus(@RequestParam String taskStatus) {
         try{
@@ -35,6 +43,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Get users with given task assigned
+     * @param taskTitle task title
+     */
     @GetMapping("/getUsersWithTask")
     public void getUsersWithTask(@RequestParam String taskTitle) {
         userService.getUsersWithTask(taskTitle);

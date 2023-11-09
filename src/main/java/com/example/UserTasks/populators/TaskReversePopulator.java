@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Task for populating TaskData objects
+ */
 @Component
 public class TaskReversePopulator {
 

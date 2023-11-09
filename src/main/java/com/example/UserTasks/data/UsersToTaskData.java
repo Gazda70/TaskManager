@@ -4,6 +4,9 @@ import lombok.*;
 
 import java.util.List;
 
+/**
+ * Data object for information about connecting users and task
+ */
 @Getter
 @Setter
 @NoArgsConstructor

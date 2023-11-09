@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * Data Access Object for accessing user objects
+ */
 public interface UserDAO extends JpaRepository<UserModel, Long> {
     void deleteByName(String name);
     @Query("SELECT u FROM UserModel u JOIN TaskModel t WHERE t.title  = :taskTitle")

@@ -4,10 +4,8 @@ import com.example.UserTasks.data.TaskData;
 import com.example.UserTasks.data.UsersToTaskData;
 import com.example.UserTasks.exceptions.DateNotValidException;
 import com.example.UserTasks.exceptions.StatusNotValidException;
-import com.example.UserTasks.model.UserModel;
 import com.example.UserTasks.services.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -22,8 +20,13 @@ public class TaskController {
     @Autowired
     private TaskServiceImpl taskService;
 
-    @GetMapping("/getTasksInGivenStatus/{taskStatus}")
-    public List<TaskData> getTasksInGivenStatus(String taskStatus) {
+    /**
+     * Get task having a given status.
+     * @param taskStatus task status
+     * @return task list
+     */
+    @GetMapping("/getTasksInGivenStatus")
+    public List<TaskData> getTasksInGivenStatus(@RequestParam String taskStatus) {
         try {
             return taskService.getTasksInGivenStatus(taskStatus);
         } catch(StatusNotValidException statusNotValidException) {
@@ -31,8 +34,12 @@ public class TaskController {
         }
     }
 
+    /**
+     * Create a task
+     * @param task Task body
+     */
     @PostMapping("/create")
-    public void createTask(TaskData task) {
+    public void createTask(@RequestBody TaskData task) {
         try {
             taskService.createTask(task);
         } catch (StatusNotValidException | ParseException | DateNotValidException exception) {
@@ -40,8 +47,12 @@ public class TaskController {
         }
     }
 
+    /**
+     * Edit task.
+     * @param task Task body
+     */
     @PostMapping("/edit")
-    public void editTask(@Param("title") TaskData task) {
+    public void editTask(@RequestBody TaskData task) {
         try {
             taskService.editTask(task);
         } catch (StatusNotValidException | ParseException | DateNotValidException exception) {
@@ -49,11 +60,20 @@ public class TaskController {
         }
     }
 
+    /**
+     * Delete task
+     * @param title task title
+     */
     @GetMapping("/delete")
     public void deleteTask(@RequestParam String title) {
         taskService.deleteTaskByTitle(title);
     }
 
+    /**
+     * Change task status
+     * @param title task title
+     * @param status task status
+     */
     @GetMapping("/changeTaskStatus")
     public void changeTaskStatus(@RequestParam String title, @RequestParam String status) {
         try {
@@ -63,6 +83,10 @@ public class TaskController {
         }
     }
 
+    /**
+     * Assign users to task
+     * @param usersToTaskData connection between users and task
+     */
     @PostMapping("/assignUsersToTask")
     public void assignUsersToTask(@RequestBody UsersToTaskData usersToTaskData) {
         taskService.assignUsersToTask(usersToTaskData.getTitle(), usersToTaskData.getUsernames());

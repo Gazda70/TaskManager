@@ -18,6 +18,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service for task-related operations
+ */
 @Component
 @Transactional
 public class TaskServiceImpl {

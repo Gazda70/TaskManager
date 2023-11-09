@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Service for task-related operations
+ */
 @Component
 public interface TaskService {
     void saveTask(final TaskModel task);

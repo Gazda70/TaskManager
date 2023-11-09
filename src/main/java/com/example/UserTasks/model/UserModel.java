@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Class for modelling user information
+ */
 @Entity
 @Data
 @NoArgsConstructor

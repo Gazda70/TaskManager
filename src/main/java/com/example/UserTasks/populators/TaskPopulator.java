@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 
+/**
+ * Class for populating task models
+ */
 @Component
 public class TaskPopulator {
 

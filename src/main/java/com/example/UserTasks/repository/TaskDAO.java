@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * Data Access Object for accessing task objects
+ */
 public interface TaskDAO extends JpaRepository<TaskModel, Long> {
     List<TaskModel> getTasksByStatus(final Status status);
     TaskModel getTaskByTitle(final String title);

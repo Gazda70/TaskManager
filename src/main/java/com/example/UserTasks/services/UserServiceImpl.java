@@ -1,10 +1,13 @@
 package com.example.UserTasks.services;
 
+import com.example.UserTasks.data.UserData;
+import com.example.UserTasks.exceptions.IncompleteInputDataException;
+import com.example.UserTasks.exceptions.ObjectAlreadyExistsException;
 import com.example.UserTasks.exceptions.StatusNotValidException;
 import com.example.UserTasks.model.Status;
-import com.example.UserTasks.model.TaskModel;
 import com.example.UserTasks.model.UserModel;
-import com.example.UserTasks.repository.TaskDAO;
+import com.example.UserTasks.populators.UserPopulator;
+import com.example.UserTasks.populators.UserReversePopulator;
 import com.example.UserTasks.repository.UserDAO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +30,7 @@ public class UserServiceImpl {
     private UserPopulator userPopulator;
 
     @Autowired
-    private TaskDAO taskDAO;
+    private UserReversePopulator userReversePopulator;
 
     public void createUser(final UserData userData) throws IncompleteInputDataException, ObjectAlreadyExistsException {
         UserModel userModel = new UserModel();
@@ -41,12 +44,12 @@ public class UserServiceImpl {
         userDAO.deleteByName(userName);
     }
 
-    public List<UserModel> getUsersWithTaskStatus(String status) throws StatusNotValidException {
-        return userDAO.findAllByTaskStatus(Status.parseStatus(status));
+    public List<UserData> getUsersWithTaskStatus(String status) throws StatusNotValidException {
+        return this.userReversePopulator.reversePopulateUserList(userDAO.findAllByAssignedTasks_Status(Status.parseStatus(status)));
     }
 
-    public List<UserModel> getUsersWithTask(String title) {
-        return userDAO.findAllByTaskTitle(title);
+    public List<UserData> getUsersWithTask(String title) {
+        return this.userReversePopulator.reversePopulateUserList(userDAO.findAllByAssignedTasks_Title(title));
     }
 
 }

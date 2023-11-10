@@ -2,8 +2,7 @@ package com.example.UserTasks.controller;
 
 import com.example.UserTasks.data.TaskData;
 import com.example.UserTasks.data.UsersToTaskData;
-import com.example.UserTasks.exceptions.DateNotValidException;
-import com.example.UserTasks.exceptions.StatusNotValidException;
+import com.example.UserTasks.exceptions.*;
 import com.example.UserTasks.services.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

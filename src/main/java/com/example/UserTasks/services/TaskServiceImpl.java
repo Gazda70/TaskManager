@@ -79,4 +79,8 @@ public class TaskServiceImpl {
     public List<TaskData> getTasksInGivenStatus(String taskStatus) throws StatusNotValidException, DateNotValidException {
         return this.taskReversePopulator.reversePopulateTaskList(this.taskDAO.getTasksByStatus(Status.parseStatus(taskStatus)));
     }
+
+    public List<TaskData> getTasksForGivenUsername(String username) throws StatusNotValidException, DateNotValidException {
+        return this.taskReversePopulator.reversePopulateTaskList(this.taskDAO.findAllByAssignedUsers_Name(username));
+    }
 }

@@ -2,10 +2,7 @@ package com.example.UserTasks.repository;
 
 import com.example.UserTasks.model.Status;
 import com.example.UserTasks.model.TaskModel;
-import com.example.UserTasks.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

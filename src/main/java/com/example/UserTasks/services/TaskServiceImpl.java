@@ -1,8 +1,7 @@
 package com.example.UserTasks.services;
 
 import com.example.UserTasks.data.TaskData;
-import com.example.UserTasks.exceptions.DateNotValidException;
-import com.example.UserTasks.exceptions.StatusNotValidException;
+import com.example.UserTasks.exceptions.*;
 import com.example.UserTasks.model.Status;
 import com.example.UserTasks.model.TaskModel;
 import com.example.UserTasks.model.UserModel;
@@ -67,7 +66,7 @@ public class TaskServiceImpl {
         TaskModel existingTask = this.taskDAO.getTaskByTitle(title);
         List<UserModel> taskUsers = new ArrayList<>();
         for(String username : usernames) {
-            UserModel existingUser = this.userDAO.getByName(username);
+            UserModel existingUser = this.userDAO.getUserByName(username);
             List<TaskModel> userTasks = existingUser.getAssignedTasks();
             userTasks.add(existingTask);
             existingTask.setAssignedUsers(taskUsers);
@@ -77,7 +76,7 @@ public class TaskServiceImpl {
         this.taskDAO.save(existingTask);
     }
 
-    public List<TaskData> getTasksInGivenStatus(String taskStatus) throws StatusNotValidException {
+    public List<TaskData> getTasksInGivenStatus(String taskStatus) throws StatusNotValidException, DateNotValidException {
         return this.taskReversePopulator.reversePopulateTaskList(this.taskDAO.getTasksByStatus(Status.parseStatus(taskStatus)));
     }
 }

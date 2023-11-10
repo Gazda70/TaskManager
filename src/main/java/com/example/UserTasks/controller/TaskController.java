@@ -22,6 +22,22 @@ public class TaskController {
 
     /**
      * Get task having a given status.
+     * @param username task status
+     * @return task list
+     */
+    @GetMapping("/getTasksForGivenUser")
+    public List<TaskData> getTasksForGivenUser(@RequestParam String username) {
+        try {
+            return taskService.getTasksForGivenUsername(username);
+        } catch(StatusNotValidException statusNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
+        } catch (DateNotValidException dateNotValidException) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task date");
+        }
+    }
+
+    /**
+     * Get task having a given status.
      * @param taskStatus task status
      * @return task list
      */

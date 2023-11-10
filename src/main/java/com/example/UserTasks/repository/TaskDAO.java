@@ -16,6 +16,5 @@ public interface TaskDAO extends JpaRepository<TaskModel, Long> {
     List<TaskModel> getTasksByStatus(final Status status);
     TaskModel getTaskByTitle(final String title);
     void deleteByTitle(final String title);
-    @Query("SELECT t FROM TaskModel t JOIN UserModel u WHERE u.name  = :userName")
-    List<UserModel> findAllByUserName(@Param("userName")String userName);
+    List<TaskModel> findAllByAssignedUsers_Name(String name);
 }

@@ -1,6 +1,7 @@
 package com.example.UserTasks.controller;
 
 import com.example.UserTasks.data.TaskData;
+import com.example.UserTasks.data.TaskDataList;
 import com.example.UserTasks.data.UsersToTaskData;
 import com.example.UserTasks.exceptions.*;
 import com.example.UserTasks.services.TaskServiceImpl;
@@ -21,6 +22,7 @@ public class TaskController {
 
     /**
      * Get task having a given status.
+     *
      * @param username task status
      * @return task list
      */
@@ -28,7 +30,7 @@ public class TaskController {
     public List<TaskData> getTasksForGivenUser(@RequestParam String username) {
         try {
             return taskService.getTasksForGivenUsername(username);
-        } catch(StatusNotValidException statusNotValidException) {
+        } catch (StatusNotValidException statusNotValidException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
         } catch (DateNotValidException dateNotValidException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task date");
@@ -37,14 +39,15 @@ public class TaskController {
 
     /**
      * Get task having a given status.
+     *
      * @param taskStatus task status
      * @return task list
      */
-    @GetMapping("/getTasksInGivenStatus")
-    public List<TaskData> getTasksInGivenStatus(@RequestParam String taskStatus) {
+    @GetMapping(value = "/getTasksInGivenStatus")
+    public TaskDataList getTasksInGivenStatus(@RequestParam String taskStatus) {
         try {
-            return taskService.getTasksInGivenStatus(taskStatus);
-        } catch(StatusNotValidException statusNotValidException) {
+            return new TaskDataList(taskService.getTasksInGivenStatus(taskStatus));
+        } catch (StatusNotValidException statusNotValidException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
         } catch (DateNotValidException dateNotValidException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task date");
@@ -53,6 +56,7 @@ public class TaskController {
 
     /**
      * Create a task
+     *
      * @param task Task body
      */
     @PostMapping("/create")
@@ -72,6 +76,7 @@ public class TaskController {
 
     /**
      * Edit task.
+     *
      * @param task Task body
      */
     @PostMapping("/edit")
@@ -91,6 +96,7 @@ public class TaskController {
 
     /**
      * Delete task
+     *
      * @param title task title
      */
     @GetMapping("/delete")
@@ -100,20 +106,22 @@ public class TaskController {
 
     /**
      * Change task status
-     * @param title task title
+     *
+     * @param title  task title
      * @param status task status
      */
     @GetMapping("/changeTaskStatus")
     public void changeTaskStatus(@RequestParam String title, @RequestParam String status) {
         try {
             taskService.changeTaskStatus(title, status);
-        } catch(StatusNotValidException statusNotValidException) {
+        } catch (StatusNotValidException statusNotValidException) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid task status");
         }
     }
 
     /**
      * Assign users to task
+     *
      * @param usersToTaskData connection between users and task
      */
     @PostMapping("/assignUsersToTask")
